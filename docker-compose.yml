@@ -1,0 +1,46 @@
+
+version: '2.1'
+services:
+  mariadb-develop:
+    extends:
+      file: docker-compose-base.yml
+      service: base-mariadb
+    container_name: ${CONTAINER_HOST_NAME:-mariadb}
+    hostname: ${CONTAINER_HOST_NAME:-mariadb}
+    networks:
+      local-network:
+        ipv4_address: ${IPV4_ADDRESS:-172.16.238.101}
+        ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::101}
+    ports:
+    - "${MARIADB_3306_PORT:-3306}:3306"
+    - "${MARIADB_5444_PORT:-5444}:5444"
+    - "${MARIADB_5567_PORT:-5567}:5567"
+    - "${MARIADB_5568_PORT:-5568}:5568"
+    volumes:
+    - data:/var/lib/mysql
+    - log:/var/log
+
+networks:
+  local-network:
+    external: true
+    driver: bridge
+    enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.16.238.0/24
+      - subnet: 2001:3984:3989::/64
+
+volumes:
+  data:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/data
+      o: bind
+  log:
+    driver: local
+    driver_opts:
+      type: none
+      device: ${PWD}/data/log
+      o: bind

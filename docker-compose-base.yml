@@ -1,0 +1,13 @@
+
+version: '2.1'
+services:
+  base-mariadb:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+      - IMAGE_ARG_IMAGE_TAG=${IMAGE_ARG_IMAGE_TAG:-10.1.34}
+    environment:
+    - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-root_pass} # changeme
+    image: ${IMAGE_PREFIX:-home1oss}/mariadb:${IMAGE_TAG:-10.1.34-SNAPSHOT}
+    restart: always
