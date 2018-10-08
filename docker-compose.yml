@@ -10,7 +10,7 @@ services:
     networks:
       local-network:
         ipv4_address: ${IPV4_ADDRESS:-172.16.238.101}
-        ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::101}
+        #ipv6_address: ${IPV6_ADDRESS:-2001:3984:3989::101}
     ports:
     - "${MARIADB_3306_PORT:-3306}:3306"
     - "${MARIADB_5444_PORT:-5444}:5444"
@@ -29,7 +29,7 @@ networks:
       driver: default
       config:
       - subnet: 172.16.238.0/24
-      - subnet: 2001:3984:3989::/64
+      #- subnet: 2001:3984:3989::/64
 
 volumes:
   data:
