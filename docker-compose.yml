@@ -16,6 +16,7 @@ services:
     - "${MARIADB_5444_PORT:-5444}:5444"
     - "${MARIADB_5567_PORT:-5567}:5567"
     - "${MARIADB_5568_PORT:-5568}:5568"
+    restart: always
     volumes:
     - data:/var/lib/mysql
     - log:/var/log
