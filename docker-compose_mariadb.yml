@@ -5,14 +5,22 @@ services:
     extends:
       file: docker-compose-base.yml
       service: base-mariadb
-    container_name: ${CONTAINER_HOST_NAME:-mariadb}
-    hostname: ${CONTAINER_HOST_NAME:-mariadb}
+    container_name: ${CONTAINER_HOST_NAME:-standalone.mariadb}
+    hostname: ${CONTAINER_HOST_NAME:-standalone.mariadb}
+    labels:
+      deploy.config.commit: ${LABEL_DEPLOY_CONFIG_COMMIT:-unknown}
+      deploy.config.name: ${LABEL_DEPLOY_CONFIG_NAME:-unknown}
+      deploy.config.ref: ${LABEL_DEPLOY_CONFIG_REF:-unknown}
+      deploy.util.commit: ${LABEL_DEPLOY_UTIL_COMMIT:-unknown}
+      deploy.util.ref: ${LABEL_DEPLOY_UTIL_REF:-unknown}
+      instance.name.short: ${LABEL_INSTANCE_NAME_SHORT:-standalone.mariadb}
+      instance.name: ${LABEL_INSTANCE_NAME:-127.0.0.1/mariadb/standalone}
     network_mode: bridge
     ports:
-    - "${MARIADB_3306_PORT:-3306}:3306"
-    - "${MARIADB_5444_PORT:-5444}:5444"
-    - "${MARIADB_5567_PORT:-5567}:5567"
-    - "${MARIADB_5568_PORT:-5568}:5568"
+    - "${EXTERNAL_MARIADB_3306_PORT:-3306}:3306"
+    - "${EXTERNAL_MARIADB_5444_PORT:-5444}:5444"
+    - "${EXTERNAL_MARIADB_5567_PORT:-5567}:5567"
+    - "${EXTERNAL_MARIADB_5568_PORT:-5568}:5568"
     restart: always
     volumes:
     - data:/var/lib/mysql
